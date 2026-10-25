@@ -29,18 +29,19 @@ Please answer the questions in the attached worksheet in PLAIN TEXT only.
 - If a question has parts, label them a) b) c) on separate lines under that number.
 - No bold, no italics, no bullet points, no tables, no headings, no LaTeX, no emoji.
 - Keep each answer short enough to fit in a blank on the worksheet. No explanations unless a question asks for one.
-- Only use letters, numbers and these symbols: . , ; : ! ? ' " ( ) - + / & @ # $
-- Write other symbols out in words (say "percent" instead of %, "equals" instead of =, "degrees" instead of the degree sign).
+- Only use letters, numbers and these symbols: . , ; : ! ? ' " ( ) - + / & @ # $ % = < > [ ] { } ~ ^ | \ _ and `
+- Accents are fine for these letters: á é í ó ú ü ç à è â ê ô Á É Í Ó Ú Ñ and ¿ ¡. Write ñ as "n".
+- Write any other symbol out in words (say "times" instead of *, "euros" instead of the euro sign, "pounds" instead of the pound sign, "degrees" instead of the degree sign).
 - Write math simply, like 3/4, x^2, sqrt(9), 2 x 5.
 - Give me only the numbered answers, nothing before or after them.
 ```
 
 ## About the font
+`fonts/MyHandwriting-extended.woff2` / `.ttf` are used exactly as drawn: no smoothing, no redrawing, no swapped letters. The font has letters A-Z and a-z, digits 0-9 and these symbols: ``! " # $ & ' ( ) + , - . / : ; ? @ % = < > _ [ ] { } ~ ^ | \ ` ``, plus these accented letters: `é è ê á à â í ó ô ú ü ç É Ñ Á Í Ó Ú ¿ ¡`.
 
-`fonts/MyHandwriting.woff2` / `.ttf` are used exactly as drawn: no smoothing, no redrawing, no swapped letters. The font has letters A-Z and a-z, digits 0-9 and these symbols: `! " # $ & ' ( ) + , - . / : ; ? @`.
-It does not have `%`, `=`, `*`, `<`, `>`, `_`, brackets other than `( )`, or accented letters yet. If those appear in the text, the site warns you and shows them in a plain font until they are added to the font.
+It does not have `*`, `ñ`, `€` or `£` yet (those boxes are being rewritten), or anything else not listed above (for example `°`). If those appear in the text, the site warns you and shows them in a plain font until they are added.
 
-The site only does these tiny clean-ups before writing: curly quotes become straight quotes, long dashes become `-`, and `**` / `__` chatbot formatting marks are removed.
+The site only does these tiny clean-ups before writing: curly quotes become straight quotes, long dashes become `-`, accents typed as two parts are joined into one letter, and `**` / `__` chatbot formatting marks are removed.
 
 ## Files
 

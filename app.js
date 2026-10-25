@@ -5,7 +5,11 @@
   var FONT = '"My Handwriting", sans-serif';
   // Characters that exist in the owner's font (everything else shows in a plain fallback font).
   var SUPPORTED = new Set(
-    ("!\"#$&'()+,-./0123456789:;?@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz \n").split("")
+    ("!\"#$&'()+,-./0123456789:;?@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz \n" +
+     // added from the "extra characters" page: symbols + Spanish accents
+     "%=<>_[]`{}~^|\\" +
+     "\u00E9\u00E8\u00EA\u00E1\u00E0\u00E2\u00ED\u00F3\u00F4\u00FA\u00FC\u00E7" + // é è ê á à â í ó ô ú ü ç
+     "\u00C9\u00D1\u00C1\u00CD\u00D3\u00DA\u00BF\u00A1").split("")
   );
 
   var AI_NOTE =
@@ -14,8 +18,9 @@
     "- If a question has parts, label them a) b) c) on separate lines under that number.\n" +
     "- No bold, no italics, no bullet points, no tables, no headings, no LaTeX, no emoji.\n" +
     "- Keep each answer short enough to fit in a blank on the worksheet. No explanations unless a question asks for one.\n" +
-    "- Only use letters, numbers and these symbols: . , ; : ! ? ' \" ( ) - + / & @ # $\n" +
-    "- Write other symbols out in words (say \"percent\" instead of %, \"equals\" instead of =, \"degrees\" instead of the degree sign).\n" +
+    "- Only use letters, numbers and these symbols: . , ; : ! ? ' \" ( ) - + / & @ # $ % = < > [ ] { } ~ ^ | \\ _ and `\n" +
+    "- Accents are fine for these letters: \u00E1 \u00E9 \u00ED \u00F3 \u00FA \u00FC \u00E7 \u00E0 \u00E8 \u00E2 \u00EA \u00F4 \u00C1 \u00C9 \u00CD \u00D3 \u00DA \u00D1 and \u00BF \u00A1. Write \u00F1 as \"n\".\n" +
+    "- Write any other symbol out in words (say \"times\" instead of *, \"euros\" instead of the euro sign, \"pounds\" instead of the pound sign, \"degrees\" instead of the degree sign).\n" +
     "- Write math simply, like 3/4, x^2, sqrt(9), 2 x 5.\n" +
     "- Give me only the numbered answers, nothing before or after them.";
 
@@ -41,8 +46,9 @@
   /* ------------------------------------------------------------ text helpers */
   function normalize(t) {
     return String(t == null ? "" : t)
+      .normalize("NFC") // so "e" + combining accent counts as the single letter
       .replace(/\r\n?/g, "\n")
-      .replace(/[\u2018\u2019\u02BC\u00B4`]/g, "'")
+      .replace(/[\u2018\u2019\u02BC\u00B4]/g, "'")
       .replace(/[\u201C\u201D]/g, '"')
       .replace(/[\u2013\u2014\u2212\u2011\u2010]/g, "-")
       .replace(/\u2026/g, "...")
@@ -259,7 +265,7 @@
     if (bad.length) {
       w.hidden = false;
       w.textContent = "Your handwriting font doesn't have these yet: " + bad.map(function (c) { return c === "\u00A0" ? "(space)" : c; }).join("  ") +
-        ". They will show in a plain font. Ask the chatbot to write them in words (for example \"percent\").";
+        ". They will show in a plain font. Ask the chatbot to write them in words (for example \"times\" instead of *).";
     } else { w.hidden = true; }
   }
 

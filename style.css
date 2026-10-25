@@ -1,6 +1,6 @@
 @font-face {
   font-family: "My Handwriting";
-  src: url("fonts/MyHandwriting.woff2") format("woff2"), url("fonts/MyHandwriting.ttf") format("truetype");
+  src: url("fonts/MyHandwriting-extended.woff2") format("woff2"), url("fonts/MyHandwriting-extended.ttf") format("truetype");
   font-display: swap;
 }
 :root {
