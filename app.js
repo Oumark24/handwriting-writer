@@ -186,10 +186,10 @@
       c.strokeRect(0, 0, L.frameW, L.h);
       c.setLineDash([]);
       if (b.label !== "") { // small tag with the answer number
-        var t = "#" + b.label, fs = 11 * u;
+        var t = "#" + b.label, fs = 10 * u;
         c.font = "bold " + fs + "px system-ui, sans-serif";
         var tw = c.measureText(t).width + 8 * u;
-        c.fillStyle = sel ? "#1c6bff" : "rgba(28,107,255,.75)";
+        c.fillStyle = sel ? "rgba(28,107,255,.9)" : "rgba(28,107,255,.45)";
         c.fillRect(0, -fs - 5 * u, tw, fs + 5 * u);
         c.fillStyle = "#fff"; c.textBaseline = "middle";
         c.fillText(t, 4 * u, -(fs + 5 * u) / 2);

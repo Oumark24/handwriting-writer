@@ -2,6 +2,8 @@
 
 A small phone-friendly web page that writes text in **your own handwriting** (the "My Handwriting" font) onto a photo of a worksheet, or onto lined paper, and gives you a PDF or image.
 
+**Live site:** https://oumar-handwriting-writer.netlify.app/
+
 Everything runs inside your browser. Photos and answers are never uploaded anywhere.
 
 ## How to use it (from your phone)
