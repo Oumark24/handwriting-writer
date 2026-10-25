@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fffdf7">
+<title>My Handwriting Writer</title>
+<link rel="preload" href="fonts/MyHandwriting.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <h1 class="hw">My Handwriting Writer</h1>
+  <p>Put your answers on a worksheet photo, or on lined paper, in your own handwriting. Everything stays on your phone.</p>
+</header>
+
+<main>
+  <!-- STEP 1 -->
+  <section class="card">
+    <h2><span class="n">1</span> Pick a mode</h2>
+    <div class="seg" role="tablist">
+      <button id="modePhoto" class="on" role="tab">On my worksheet photo</button>
+      <button id="modeLined" role="tab">Lined paper</button>
+    </div>
+
+    <div id="photoSetup">
+      <label class="btn big" for="photoInput">Upload worksheet photo(s)</label>
+      <input id="photoInput" type="file" accept="image/*" multiple hidden>
+      <p class="hint">One photo per page. Add more any time. Photos are not uploaded anywhere.</p>
+    </div>
+
+    <div id="linedSetup" hidden>
+      <div class="row">
+        <label>Ink size <input id="lnSize" type="range" min="14" max="60" value="30"><output id="lnSizeO">30</output></label>
+      </div>
+      <div class="row">
+        <label>Line spacing <input id="lnSpace" type="range" min="20" max="60" value="34"><output id="lnSpaceO">34</output></label>
+      </div>
+      <div class="row">
+        <label class="chk"><input id="lnRules" type="checkbox" checked> Show ruled lines</label>
+        <label class="chk"><input id="lnMargin" type="checkbox" checked> Margin line</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="card">
+    <h2><span class="n">2</span> Paste the answers</h2>
+    <p class="hint">Ask any chatbot (Gemini, ChatGPT, etc.) to answer in plain text, then paste its reply here.</p>
+    <details class="note">
+      <summary>Note to paste into the chatbot</summary>
+      <pre id="aiNote"></pre>
+      <button id="copyNote" class="btn small">Copy note</button>
+    </details>
+    <textarea id="answers" rows="7" placeholder="1. 12&#10;2. The mitochondria is the powerhouse of the cell.&#10;3. x = 4"></textarea>
+    <div id="warn" class="warn" hidden></div>
+    <div id="photoButtons" class="row">
+      <button id="splitBtn" class="btn">Split numbered answers into boxes</button>
+      <button id="oneBtn" class="btn ghost">Put it all in one box</button>
+    </div>
+    <div id="linedButtons" class="row" hidden>
+      <p class="hint">In lined mode the text is written straight onto the paper as you type.</p>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="card">
+    <h2><span class="n">3</span> <span id="step3">Place the writing</span></h2>
+    <p id="placeHint" class="hint">Drag a box onto its blank. Use the round handles on a selected box: bottom-right to resize, right side to change the line width.</p>
+
+    <div class="pagebar">
+      <button id="prevPg" class="btn small ghost" aria-label="Previous page">&lsaquo;</button>
+      <span id="pgLabel">No page yet</span>
+      <button id="nextPg" class="btn small ghost" aria-label="Next page">&rsaquo;</button>
+      <select id="zoom" aria-label="Zoom">
+        <option value="1">Fit</option><option value="1.6">150%</option><option value="2.2">200%</option><option value="3.2">300%</option>
+      </select>
+    </div>
+
+    <div id="stage" class="stage"><canvas id="cv" width="10" height="10"></canvas></div>
+    <div id="empty" class="empty">Upload a worksheet photo to start.</div>
+
+    <div id="boxPanel" class="panel" hidden>
+      <label class="full">Text in this box
+        <textarea id="bxText" rows="3"></textarea>
+      </label>
+      <div class="row"><label>Size <input id="bxSize" type="range" min="8" max="200" value="40"></label></div>
+      <div class="row"><label>Line width <input id="bxWidth" type="range" min="5" max="100" value="60"></label></div>
+      <div class="row"><label>Tilt <input id="bxRot" type="range" min="-15" max="15" step="0.5" value="0"></label></div>
+      <div class="row"><label>Line gap <input id="bxLh" type="range" min="0.8" max="2.2" step="0.05" value="1.25"></label></div>
+      <div class="row inks">
+        <span>Ink</span>
+        <button class="ink" data-ink="#141414" style="--c:#141414" aria-label="Black"></button>
+        <button class="ink" data-ink="#1c3d9c" style="--c:#1c3d9c" aria-label="Blue pen"></button>
+        <button class="ink" data-ink="#4a4a4a" style="--c:#4a4a4a" aria-label="Pencil"></button>
+        <button class="ink" data-ink="#8a1c1c" style="--c:#8a1c1c" aria-label="Red"></button>
+      </div>
+      <div class="nudge">
+        <span>Nudge</span>
+        <button data-n="-1,0" class="btn small ghost" aria-label="Left">&larr;</button>
+        <button data-n="0,-1" class="btn small ghost" aria-label="Up">&uarr;</button>
+        <button data-n="0,1" class="btn small ghost" aria-label="Down">&darr;</button>
+        <button data-n="1,0" class="btn small ghost" aria-label="Right">&rarr;</button>
+      </div>
+      <div class="row">
+        <button id="bxDup" class="btn small ghost">Duplicate</button>
+        <button id="bxDel" class="btn small danger">Delete box</button>
+      </div>
+    </div>
+
+    <div class="row" id="pageActions">
+      <button id="addBox" class="btn ghost">+ Add text box</button>
+      <button id="rmPage" class="btn ghost danger">Remove this photo</button>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="card">
+    <h2><span class="n">4</span> Download</h2>
+    <div class="row">
+      <button id="dlPdf" class="btn big">Download PDF</button>
+    </div>
+    <div class="row">
+      <button id="dlPng" class="btn ghost">This page as image</button>
+      <button id="shareBtn" class="btn ghost" hidden>Share…</button>
+    </div>
+    <p id="status" class="hint" role="status"></p>
+  </section>
+</main>
+
+<footer>
+  <p>Your handwriting font is used exactly as drawn. Nothing is smoothed or swapped.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
